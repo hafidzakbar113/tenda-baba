@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sewa Tenda Camping - Tenda Baba</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        /* PENGATURAN TEMA WARNA BIRU */
+        :root {
+            /* Palette Biru yang enak dilihat */
+            --primary-color: #2563eb; /* Biru Utama (Royal Blue yang tenang) */
+            --secondary-color: #1e40af; /* Biru yang lebih gelap untuk efek hover */
+            --accent-color: #f59e0b; /* Kuning/Oranye untuk harga agar kontras */
+            --text-dark: #1f2937; /* Warna teks gelap (bukan hitam pekat agar lembut) */
+            --text-light: #f9fafb;
+            --bg-light: #f3f4f6; /* Latar belakang abu-abu kebiruan yang sangat terang */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--text-dark);
+            background-color: var(--bg-light);
+        }
+
+        /* NAVBAR */
+        nav {
+            background: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            letter-spacing: 1px;
+        }
+
+        .logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            margin-left: 25px;
+            font-weight: 600;
+            transition: 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            /* Gambar background dengan overlay biru transparan */
+            background: linear-gradient(to right, rgba(37, 99, 235, 0.8), rgba(30, 64, 175, 0.6)), url('gambar/w6.png');
+            background-size: cover;
+            background-position: center;
+            height: 90vh; /* Sedikit lebih pendek dari layar penuh */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 20px;
+            margin-top: 60px; /* Kompensasi fixed navbar */
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2.5rem;
+            max-width: 700px;
+            font-weight: 300;
+        }
+
+        .btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 14px 35px;
+            text-decoration: none;
+            border-radius: 8px; /* Sudut sedikit membulat */
+            font-weight: 700;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 6px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(37, 99, 235, 0.4);
+        }
+
+        /* PILIHAN PAKET (PRODUCTS) */
+        .products {
+            padding: 6rem 5%;
+            background: var(--bg-light);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            position: relative;
+        }
+        
+        /* Garis bawah judul */
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 15px auto 0;
+            border-radius: 2px;
+        }
+
+        .product-grid {
+            display: grid;
+            /* Membuat grid responsif: minimal 280px, maksimal memenuhi ruang */
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.05);
+            display: flex;
+            flex-direction: column; /* Agar tombol selalu di bawah */
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.15);
+            border-color: var(--primary-color);
+        }
+
+        .product-img {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+            border-bottom: 3px solid var(--primary-color);
+        }
+
+        .product-info {
+            padding: 1.8rem;
+            flex-grow: 1; /* Mengisi ruang kosong */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .product-info h3 {
+            margin-bottom: 0.8rem;
+            color: var(--text-dark);
+            font-size: 1.3rem;
+        }
+
+        .price {
+            color: var(--accent-color); /* Menggunakan warna aksen (oranye) */
+            font-weight: 800;
+            font-size: 1.25rem;
+            margin-bottom: 1.2rem;
+            display: block;
+        }
+
+        .features-list {
+            list-style: none;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+            color: #555;
+            flex-grow: 1;
+        }
+
+        .features-list li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .features-list i {
+            color: var(--primary-color); /* Ikon centang warna biru */
+            margin-right: 10px;
+            margin-top: 4px;
+        }
+        
+        .btn-block {
+             width:100%; 
+             display:block; 
+             text-align:center;
+             margin-top: auto; /* Memastikan tombol di dasar kartu */
+        }
+
+        /* ABOUT & CONTACT */
+        .contact {
+            padding: 6rem 5%;
+            text-align: center;
+            background: white;
+        }
+
+        .contact-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .contact-item {
+            flex: 1;
+            min-width: 250px;
+            padding: 3rem 2rem;
+            background: var(--bg-light);
+            border-radius: 12px;
+            transition: 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .contact-item:hover {
+             border-color: var(--primary-color);
+             background: white;
+             box-shadow: 0 10px 25px rgba(37, 99, 235, 0.1);
+        }
+
+        .contact-item i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-item h3 {
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--primary-color); /* Footer warna biru */
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: auto;
+        }
+
+        /* TOMBOL WA MELAYANG */
+        .float-wa {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366; /* Tetap hijau WA agar familiar */
+            color: white;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 35px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            transition: 0.3s;
+        }
+
+        .float-wa:hover {
+            transform: scale(1.1) rotate(15deg);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p { font-size: 1rem; }
+            .nav-links { display: none; } /* Sederhana untuk mobile */
+            .product-grid { grid-template-columns: 1fr; } /* 1 kolom di HP */
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">
+            <img src="gambar/logo.png" alt="Logo Tenda Baba">
+            TENDA BABA
+        </div>
+        <div class="nav-links">
+            <a href="#home">Beranda</a>
+            <a href="#produk">Pilihan Katalog</a>
+            <a href="#kontak">Hubungi Kami</a>
+        </div>
+    </nav>
+
+    <section class="hero" id="home">
+        <h1>Sempurnakan Momen Bahagia</h1>
+        <p>Menghadirkan nuansa kemewahan yang dapat dijangkau oleh setiap kalangan</p>
+        <a href="#produk" class="btn">Lihat 10 Pilihan Katalog</a>
+    </section>
+
+    <section class="products" id="produk">
+        <h2 class="section-title">Katalog Sewa & Paket</h2>
+        <div class="product-grid">
+            
+            <div class="product-card">
+                <img src="gambar/w1.png" class="product-img">
+                <div class="product-info">
+                    <h3>Tenda Dome 2P (Couple)</h3>
+                    <span class="price">Rp 15.000.000 / 24 Jam</span>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check-circle"></i> Kapasitas 100 kursi (Pas)</li>
+                        <li><i class="fas fa-check-circle"></i> lampu lampu lucu</li>
+                        <li><i class="fas fa-check-circle"></i> satu kiss dari faqih omen</li>
+                    </ul>
+                    <a href="https://wa.me/6281234567890?text=Halo%20Tenda%20Baba,%20saya%20mau%20sewa%20Tenda%20Dome%202P" class="btn btn-block">Pesan Via WA</a>
+                </div>
+            </div>
+
+            <div class="product-card" style="border-color: var(--accent-color); border-width: 2px;"> <div style="background: var(--accent-color); color:white; text-align: center; font-size: 0.8rem; font-weight:bold;">BEST SELLER</div>
+                <img src="gambar/w2.png" class="product-img">
+
+                <div class="product-info">
+                    <h3>Tenda Dome 4P (Standard)</h3>
+                    <span class="price">Rp 20.000.000 / 24 Jam</span>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check-circle"></i> Kapasitas 200-250 Orang</li>
+                        <li><i class="fas fa-check-circle"></i> Double Layer (Anti Hujan Badai)</li>
+                        <li><i class="fas fa-check-circle"></i> Alat Catering</li>
+                    </ul>
+                    <a href="https://wa.me/6281234567890?text=Halo%20Tenda%20Baba,%20saya%20mau%20sewa%20Tenda%20Dome%204P" class="btn btn-block">Pesan Via WA</a>
+                </div>
+            </div>
+
+             <div class="product-card">
+                <img src="gambar/w3.png" class="product-img">
+
+                <div class="product-info">
+                    <h3>Tenda Dome 6P (Group)</h3>
+                    <span class="price">Rp 35.000.000 / 24 Jam</span>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check-circle"></i> Kapasitas 500-1000 Orang</li>
+                        <li><i class="fas fa-check-circle"></i> Double Layer Waterproof</li>
+                        <li><i class="fas fa-check-circle"></i> di cium faqih omen</li>
+                    </ul>
+                    <a href="https://wa.me/6281234567890?text=Halo%20Tenda%20Baba,%20saya%20mau%20sewa%20Tenda%20Dome%206P" class="btn btn-block">Pesan Via WA</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="gambar/w4.png" class="product-img">
+
+                <div class="product-info">
+                    <h3>Tenda Arpenaz Family 8P</h3>
+                    <span class="price">Rp 40.000.000 / 24 Jam</span>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check-circle"></i> Kapasitas 1500 Orang</li>
+                        <li><i class="fas fa-check-circle"></i> Sangat Luas & Tinggi</li>
+                        <li><i class="fas fa-check-circle"></i> sound dan fotografer</li>
+                    </ul>
+                    <a href="https://wa.me/6281234567890?text=Halo%20Tenda%20Baba,%20saya%20mau%20sewa%20Tenda%20Family%208P" class="btn btn-block">Pesan Via WA</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="gambar/w5.png" class="product-img">
+
+                <div class="product-info">
+                    <h3>Tenda Pop-Up Otomatis 3P</h3>
+                    <span class="price">Rp 50.000.000 / 24 Jam</span>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check-circle"></i> Kapasitas 3000 Orang</li>
+                        <li><i class="fas fa-check-circle"></i> gratis makan</li>
+                        <li><i class="fas fa-check-circle"></i> gratis di cium faqih omen</li>
+                    </ul>
+                    <a href="https://wa.me/6281234567890?text=Halo%20Tenda%20Baba,%20saya%20mau%20sewa%20Tenda%20Otomatis%203P" class="btn btn-block">Pesan Via WA</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="gambar/w4.png" class="product-img">
+                <div class="product-info">
+                    <h3>Paket Hemat Berdua</h3>
+                    <span class="price">Rp 60.000.000 / 24 Jam</span>
+                    <ul class="features-list">
+                        <li><i class="fas fa-plus-circle"></i> Tenda Dome 2P + 2 Matras</li>
+                        <li><i class="fas fa-plus-circle"></i> Kompor Portable + Gas Kaleng</li>
+                        <li><i class="fas fa-plus-circle"></i> Cooking Set (Panci/Wajan) Kecil</li>
+                    </ul>
+                    <a href="https://wa.me/6281234567890?text=Halo%20Tenda%20Baba,%20saya%20mau%20sewa%20Paket%20Hemat%20Berdua" class="btn btn-block">Pesan Via WA</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="gambar/w5.png" class="product-img">
+
+                <div class="product-info">
+                    <h3>Paket Komplit Geng 4P</h3>
+                    <span class="price">Rp 135.000 / 24 Jam</span>
+                    <ul class="features-list">
+                        <li><i class="fas fa-plus-circle"></i> Tenda 4P Double Layer</li>
+                        <li><i class="fas fa-plus-circle"></i> 4 Matras + 4 Sleeping Bag</li>
+                        <li><i class="fas fa-plus-circle"></i> Paket Masak Lengkap + Lampu</li>
+                    </ul>
+                    <a href="https://wa.me/6281234567890?text=Halo%20Tenda%20Baba,%20saya%20mau%20sewa%20Paket%20Komplit%204P" class="btn btn-block">Pesan Via WA</a>
+                </div>
+            </div>
+
+             <div class="product-card">
+                <img src="gambar/w1.png" class="product-img">
+
+                <div class="product-info">
+                    <h3>Flysheet Besar (Peneduh)</h3>
+                    <span class="price">Rp 25.000 / 24 Jam</span>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check-circle"></i> Ukuran 3x4 Meter atau 4x6 Meter</li>
+                        <li><i class="fas fa-check-circle"></i> Termasuk Tali dan Pasak</li>
+                        <li><i class="fas fa-times-circle"></i> Belum termasuk tiang flysheet</li>
+                    </ul>
+                    <a href="https://wa.me/6281234567890?text=Halo%20Tenda%20Baba,%20saya%20mau%20sewa%20Flysheet" class="btn btn-block">Pesan Via WA</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="gambar/w3.png" class="product-img">
+
+                <div class="product-info">
+                    <h3>Set Alat Masak Outdoor</h3>
+                    <span class="price">Rp 30.000 / 24 Jam</span>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check-circle"></i> Kompor Windproof (Kotak)</li>
+                        <li><i class="fas fa-check-circle"></i> Cooking Set Nesting (DS-308)</li>
+                        <li><i class="fas fa-check-circle"></i> Gratis 1 Gas Kaleng Refill</li>
+                    </ul>
+                    <a href="https://wa.me/6281234567890?text=Halo%20Tenda%20Baba,%20saya%20mau%20sewa%20Set%20Alat%20Masak" class="btn btn-block">Pesan Via WA</a>
+                </div>
+            </div>
+
+             <div class="product-card">
+                <img src="gambar/w2.png" class="product-img">
+
+                <div class="product-info">
+                    <h3>Paket Penerangan Malam</h3>
+                    <span class="price">Rp 20.000 / 24 Jam</span>
+                    <ul class="features-list">
+                        <li><i class="fas fa-check-circle"></i> 1 Lampu Tenda Gantung LED</li>
+                        <li><i class="fas fa-check-circle"></i> 1 Headlamp (Senter Kepala)</li>
+                        <li><i class="fas fa-check-circle"></i> Sudah termasuk baterai</li>
+                    </ul>
+                    <a href="https://wa.me/6289614408386?text=Halo%20Tenda%20Baba,%20saya%20mau%20sewa%20Paket%20Penerangan" class="btn btn-block">Pesan Via WA</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="contact" id="kontak">
+        <h2 class="section-title">Hubungi & Lokasi</h2>
+        <p>Punya pertanyaan atau mau booking untuk tanggal tertentu? Chat kami sekarang!</p>
+        
+        <div class="contact-container">
+            <div class="contact-item">
+                <i class="fas fa-map-marked-alt"></i>
+                <h3>Alamat Basecamp</h3>
+                <p>Jl. H. Junib, RT.10/RW.1, Duri Kosambi, Kecamatan Cengkareng, Jakarta, Daerah Khusus Ibukota Jakarta 11730<br>(Silakan cek detail di Bio Instagram)</p>
+            </div>
+            <div class="contact-item">
+                <i class="fab fa-whatsapp-square"></i>
+                <h3>Admin WhatsApp</h3>
+                <p>0896-1440-8386</p>
+                <p style="font-size:0.9rem; color:#666;">Fast Response 09.00 - 20.00</p>
+            </div>
+            <div class="contact-item">
+                <i class="fab fa-instagram-square"></i>
+                <h3>Instagram TV</h3>
+                <p>@tendababa_</p>
+                <a href="https://www.instagram.com/tendababa_/" target="_blank" style="color:var(--primary-color); font-weight:bold;">Follow & Cek Testimoni</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Tenda Baba Decoration. All Rights Reserved.</p>
+    </footer>
+
+    <a href="https://wa.me/6289614408386" class="float-wa" target="_blank" title="Chat WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+</body>
+</html>
